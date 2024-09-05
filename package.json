@@ -1,0 +1,29 @@
+{
+  "name": "custom-files-from-template-cli",
+  "version": "1.0.0",
+  "description": "CLI: Create your custom files from a template",
+  "author": "v4n3ss4ms",
+  "license": "ISC",
+  "main": "build/index.js",
+  "bin": {
+    "create-component": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node src/index",
+    "start": "node ./build/index"
+  },
+  "homepage": "https://github.com/v4n3ss4ms/custom-files-from-template-cli#readme",
+  "devDependencies": {
+    "@types/commander": "^2.12.0",
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^22.5.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "fs-extra": "^11.2.0",
+    "inquirer": "^10.2.0"
+  }
+}
