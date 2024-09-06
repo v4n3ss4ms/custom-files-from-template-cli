@@ -19,12 +19,22 @@ import {
 
 type FrameworkType = 'React' | 'Angular';
 
-// type FrameworkInfo = {
-//   name: FrameworkType;
-//   createComponent: (componentName: string, options: FrameworkOptionsType[]) => void;
-// };
+type SettingTemplate = {
+  template: (componentClassName: string, fileName: string) => string;
+  extension: string;
+};
 
-const FrameworkSettings: Record<FrameworkType, any> = { // TODO: remove any
+type FrameworkSettings = {
+  name: FrameworkType;
+  templates: {
+    component?: SettingTemplate;
+    style?: SettingTemplate;
+    test?: SettingTemplate;
+    html?: SettingTemplate;
+  };
+};
+
+const FRAMEWORKS_SETTINGS: Record<FrameworkType, FrameworkSettings> = {
   React: {
     name: 'React',
     templates: {
@@ -65,6 +75,10 @@ const FrameworkSettings: Record<FrameworkType, any> = { // TODO: remove any
   },
 };
 
+function getFrameworks() {
+  return Object.keys(FRAMEWORKS_SETTINGS)
+}
+
 function getComponentSettings(name: string) {
   const className = toPascalCase(name);
   const fileName = toKebabCase(name);
@@ -89,7 +103,7 @@ function promptForComponent() {
       type: 'list',
       name: 'framework',
       message: 'Framework?',
-      choices: [FrameworkSettings.React.name, FrameworkSettings.Angular.name],
+      choices: getFrameworks(),
     },
   ]);
 }
@@ -102,13 +116,13 @@ async function createComponent() {
   const { componentName, framework } = await promptForComponent();
   const { className, fileName, componentDir } = getComponentSettings(componentName);
   const frameworkKey = framework as FrameworkType;
-  const frameworkTemplates = FrameworkSettings[frameworkKey].templates;
+  const frameworkTemplates = FRAMEWORKS_SETTINGS[frameworkKey].templates;
 
   fs.ensureDirSync(componentDir);
 
-  Object.keys(frameworkTemplates).map(tmpl => {
-    const content = frameworkTemplates[tmpl].template(className, fileName);
-    fs.writeFileSync(path.join(componentDir, `${fileName}${frameworkTemplates[tmpl].extension}`), content);
+  Object.entries(frameworkTemplates).map(([_, tmpl]) => {
+      const content = tmpl.template(className, fileName);
+      fs.writeFileSync(path.join(componentDir, `${fileName}${tmpl.extension}`), content);
   });
 
   successCreationLog(className, componentDir);
