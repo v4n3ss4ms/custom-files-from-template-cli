@@ -74,24 +74,29 @@ function promptForComponent() {
   ]);
 }
 
-function createReactComponent(componentName: string) {
+function createReactComponent(componentName: string, options: FrameworkOptionsType[]) {
   const { className, fileName, componentDir } = getComponentSettings(componentName);
 
   const componentContent = reactComponentTemplate(className);
   const testContent = reactTestTemplate(className, fileName);
   const styleContent = reactStyleTemplate(fileName);
 
-
   fs.ensureDirSync(componentDir);
 
   fs.writeFileSync(path.join(componentDir, `${fileName}.component.tsx`), componentContent);
-  fs.writeFileSync(path.join(componentDir, `${fileName}.module.scss`), styleContent);
-  fs.writeFileSync(path.join(componentDir, `${fileName}.component.test.tsx`), testContent);
+
+  if (options.includes(FrameworkOptionsMap.styles)) {
+    fs.writeFileSync(path.join(componentDir, `${fileName}.module.scss`), styleContent);
+  }
+
+  if (options.includes(FrameworkOptionsMap.tests)) {
+    fs.writeFileSync(path.join(componentDir, `${fileName}.component.test.tsx`), testContent);
+  }
 
   successCreationLog(className, componentDir);
 }
 
-function createAngularComponent(componentName: string) {
+function createAngularComponent(componentName: string, options: FrameworkOptionsType[]) {
   const { className, fileName, componentDir } = getComponentSettings(componentName);
 
   const componentContent = angularComponentTemplate(className, fileName);
@@ -103,8 +108,14 @@ function createAngularComponent(componentName: string) {
 
   fs.writeFileSync(path.join(componentDir, `${fileName}.component.ts`), componentContent);
   fs.writeFileSync(path.join(componentDir, `${fileName}.component.html`), templateContent);
-  fs.writeFileSync(path.join(componentDir, `${fileName}.module.scss`), styleContent);
-  fs.writeFileSync(path.join(componentDir, `${fileName}.component.spec.ts`), testContent);
+
+  if (options.includes(FrameworkOptionsMap.styles)) {
+    fs.writeFileSync(path.join(componentDir, `${fileName}.module.scss`), styleContent);
+  }
+
+  if (options.includes(FrameworkOptionsMap.tests)) {
+    fs.writeFileSync(path.join(componentDir, `${fileName}.component.spec.ts`), testContent);
+  }
 
   successCreationLog(className, componentDir);
 }
