@@ -1,5 +1,6 @@
-export const componentTemplate = (componentClassName: string) =>
+export const componentTemplate = (componentClassName: string, fileName: string) =>
 `import React, { FC } from 'react';
+import styles from './${fileName}.module.scss'
 export const ${componentClassName}: FC = () => {
 
   return (
@@ -21,6 +22,6 @@ describe('${componentClassName} Component', () => {
 `;
 
 export const styleTemplate = (componentName: string) =>
-    `.${componentName} {
+`.${componentName} {
 }
 `;

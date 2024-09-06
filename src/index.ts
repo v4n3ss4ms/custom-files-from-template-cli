@@ -18,11 +18,10 @@ import {
 } from './templates/angular-templates';
 
 type FrameworkType = 'React' | 'Angular';
-type FrameworkOptionsType = 'tests' | 'styles';
+type FrameworkOptionsType = 'tests';
 
 const FrameworkOptionsMap: Record<FrameworkOptionsType, FrameworkOptionsType> = {
   tests: 'tests',
-  styles: 'styles',
 };
 
 // type FrameworkInfo = {
@@ -101,10 +100,9 @@ function promptForComponent() {
     {
       type: 'checkbox',
       name: 'options',
-      message: 'Do you need tests and SCSS? Checked by default',
+      message: 'Including... (Checked by default)',
       choices: [
         { name: 'Tests', value: FrameworkOptionsMap.tests, checked: true },
-        { name: 'SCSS', value: FrameworkOptionsMap.styles, checked: true },
       ],
     },
   ]);
@@ -128,10 +126,8 @@ async function createComponent() {
   const componentContent = frameworkSettings.templates.component.template(className, fileName);
   fs.writeFileSync(path.join(componentDir, `${fileName}${frameworkSettings.templates.component.extension}`), componentContent);
 
-  if (options.includes(FrameworkOptionsMap.styles)) {
-    const styleContent = frameworkSettings.templates.style.template(fileName);
-    fs.writeFileSync(path.join(componentDir, `${fileName}${frameworkSettings.templates.style.extension}`), styleContent);
-  }
+  const styleContent = frameworkSettings.templates.style.template(fileName);
+  fs.writeFileSync(path.join(componentDir, `${fileName}${frameworkSettings.templates.style.extension}`), styleContent);
 
   if (options.includes(FrameworkOptionsMap.tests)) {
     const testContent = frameworkSettings.templates.test.template(className, fileName);
