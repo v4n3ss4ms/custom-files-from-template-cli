@@ -18,11 +18,6 @@ import {
 } from './templates/angular-templates';
 
 type FrameworkType = 'React' | 'Angular';
-type FrameworkOptionsType = 'tests';
-
-const FrameworkOptionsMap: Record<FrameworkOptionsType, FrameworkOptionsType> = {
-  tests: 'tests',
-};
 
 // type FrameworkInfo = {
 //   name: FrameworkType;
@@ -97,14 +92,6 @@ function promptForComponent() {
       message: 'Framework?',
       choices: [FrameworkSettings.React.name, FrameworkSettings.Angular.name],
     },
-    {
-      type: 'checkbox',
-      name: 'options',
-      message: 'Including... (Checked by default)',
-      choices: [
-        { name: 'Tests', value: FrameworkOptionsMap.tests, checked: true },
-      ],
-    },
   ]);
 }
 
@@ -113,7 +100,7 @@ function successCreationLog(componentClassName: string, componentDir: string) {
 }
 
 async function createComponent() {
-  const { componentName, framework, options } = await promptForComponent();
+  const { componentName, framework } = await promptForComponent();
 
   const frameworkKey = framework as FrameworkType;
 
@@ -129,10 +116,8 @@ async function createComponent() {
   const styleContent = frameworkSettings.templates.style.template(fileName);
   fs.writeFileSync(path.join(componentDir, `${fileName}${frameworkSettings.templates.style.extension}`), styleContent);
 
-  if (options.includes(FrameworkOptionsMap.tests)) {
-    const testContent = frameworkSettings.templates.test.template(className, fileName);
-    fs.writeFileSync(path.join(componentDir, `${fileName}${frameworkSettings.templates.test.extension}`), testContent);
-  }
+  const testContent = frameworkSettings.templates.test.template(className, fileName);
+  fs.writeFileSync(path.join(componentDir, `${fileName}${frameworkSettings.templates.test.extension}`), testContent);
 
   if (frameworkSettings.templates.html) {
     const htmlContent = frameworkSettings.templates.html.template(className);
