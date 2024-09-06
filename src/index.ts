@@ -24,19 +24,6 @@ type FrameworkType = 'React' | 'Angular';
 //   createComponent: (componentName: string, options: FrameworkOptionsType[]) => void;
 // };
 
-
-function getComponentSettings(name: string) {
-  const className = toPascalCase(name);
-  const fileName = toKebabCase(name);
-  const componentDir = path.join(process.cwd(), fileName);
-
-  return {
-    className,
-    fileName,
-    componentDir,
-  }
-}
-
 const FrameworkSettings: Record<FrameworkType, any> = { // TODO: remove any
   React: {
     name: 'React',
@@ -77,6 +64,18 @@ const FrameworkSettings: Record<FrameworkType, any> = { // TODO: remove any
     },
   },
 };
+
+function getComponentSettings(name: string) {
+  const className = toPascalCase(name);
+  const fileName = toKebabCase(name);
+  const componentDir = path.join(process.cwd(), fileName);
+
+  return {
+    className,
+    fileName,
+    componentDir,
+  }
+}
 
 function promptForComponent() {
   return inquirer.prompt([
