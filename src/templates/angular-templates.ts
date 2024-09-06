@@ -1,10 +1,10 @@
-export const componentTemplate = (componentClassName: string, kebabCaseName: string) =>
+export const componentTemplate = (componentClassName: string, fileName: string) =>
 `import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-${kebabCaseName}',
-  templateUrl: './${kebabCaseName}.component.html',
-  styleUrls: ['./${kebabCaseName}.component.scss']
+  selector: 'app-${fileName}',
+  templateUrl: './${fileName}.component.html',
+  styleUrls: ['./${fileName}.component.scss']
 })
 export class ${componentClassName} {
   // Component logic here
@@ -17,8 +17,8 @@ export const htmlTemplate = (componentClassName: string) =>
 </p>
 `;
 
-export const testTemplate = (componentClassName: string, kebabCaseName: string) =>
-`import { ${componentClassName} } from './${kebabCaseName}.component';
+export const testTemplate = (componentClassName: string, fileName: string) =>
+`import { ${componentClassName} } from './${fileName}.component';
 
 describe('${componentClassName} Component', () => {
   test('it should render', () => {

@@ -8,9 +8,9 @@ export const ${componentClassName}: FC = () => {
 }
 `;
 
-export const testTemplate = (componentClassName: string, kebabCaseName: string) =>
+export const testTemplate = (componentClassName: string, fileName: string) =>
 `import { render, screen } from '@testing-library/react';
-import { ${componentClassName} } from './${kebabCaseName}.component';
+import { ${componentClassName} } from './${fileName}.component';
 
 describe('${componentClassName} Component', () => {
   test('it should render', () => {
