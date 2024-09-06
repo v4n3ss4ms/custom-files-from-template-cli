@@ -5,17 +5,8 @@ import * as fs from 'fs-extra';
 import * as path from 'path';
 import inquirer from 'inquirer';
 import { toKebabCase, toPascalCase } from './utils/stringUtils';
-import {
-  componentTemplate as reactComponentTemplate,
-  styleTemplate as reactStyleTemplate,
-  testTemplate as reactTestTemplate
-} from './templates/react-templates';
-import {
-  componentTemplate as angularComponentTemplate,
-  htmlTemplate as angularHtmlTemplate,
-  styleTemplate as angularStyleTemplate,
-  testTemplate as angularTestTemplate
-} from './templates/angular-templates';
+import { getTemplate as getReactTemplate } from './templates/react-templates';
+import { getTemplate as getAngularTemplate } from './templates/angular-templates';
 
 type FrameworkType = 'React' | 'Angular';
 
@@ -39,15 +30,15 @@ const FRAMEWORKS_SETTINGS: Record<FrameworkType, FrameworkSettings> = {
     name: 'React',
     templates: {
       component: {
-        template: reactComponentTemplate,
+        template: getReactTemplate('component'),
         extension: '.component.tsx',
       },
       style: {
-        template: reactStyleTemplate,
+        template: getReactTemplate('style'),
         extension: '.module.scss',
       },
       test: {
-        template: reactTestTemplate,
+        template: getReactTemplate('test'),
         extension: '.component.test.tsx',
       },
     },
@@ -56,19 +47,19 @@ const FRAMEWORKS_SETTINGS: Record<FrameworkType, FrameworkSettings> = {
     name: 'Angular',
     templates: {
       component: {
-        template: angularComponentTemplate,
+        template: getAngularTemplate('component'),
         extension: '.component.ts',
       },
       style: {
-        template: angularStyleTemplate,
+        template: getAngularTemplate('style'),
         extension: '.component.scss',
       },
       test: {
-        template: angularTestTemplate,
+        template: getAngularTemplate('test'),
         extension: '.component.spec.ts',
       },
       html: {
-        template: angularHtmlTemplate,
+        template: getAngularTemplate('html'),
         extension: '.component.html',
       },
     },
@@ -121,8 +112,8 @@ async function createComponent() {
   fs.ensureDirSync(componentDir);
 
   Object.entries(frameworkTemplates).map(([_, tmpl]) => {
-      const content = tmpl.template(className, fileName);
-      fs.writeFileSync(path.join(componentDir, `${fileName}${tmpl.extension}`), content);
+    const content = tmpl.template(className, fileName);
+    fs.writeFileSync(path.join(componentDir, `${fileName}${tmpl.extension}`), content);
   });
 
   successCreationLog(className, componentDir);

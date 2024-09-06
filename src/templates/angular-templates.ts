@@ -1,4 +1,4 @@
-export const componentTemplate = (componentClassName: string, fileName: string) =>
+const componentTemplate = (componentClassName: string, fileName: string) =>
 `import { Component } from '@angular/core';
 
 @Component({
@@ -11,13 +11,13 @@ export class ${componentClassName} {
 }
 `;
 
-export const htmlTemplate = (componentClassName: string, fileName: string) =>
+const htmlTemplate = (componentClassName: string, fileName: string) =>
 `<p>
   ${componentClassName} works!
 </p>
 `;
 
-export const testTemplate = (componentClassName: string, fileName: string) =>
+const testTemplate = (componentClassName: string, fileName: string) =>
 `import { ${componentClassName} } from './${fileName}.component';
 
 describe('${componentClassName} Component', () => {
@@ -28,6 +28,21 @@ describe('${componentClassName} Component', () => {
 });
 `;
 
-export const styleTemplate = (componentClassName: string, fileName: string) =>
+const styleTemplate = (componentClassName: string, fileName: string) =>
 `/* Add your styles here */
 `;
+
+export const getTemplate = (type: string) => {
+  switch(type) {
+    case 'component':
+      return componentTemplate;
+    case 'html':
+      return htmlTemplate;
+    case 'test':
+      return testTemplate;
+    case 'style':
+      return styleTemplate;
+    default:
+      return () => 'template';
+  }
+}
