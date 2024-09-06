@@ -11,7 +11,7 @@ export class ${componentClassName} {
 }
 `;
 
-export const htmlTemplate = (componentClassName: string) =>
+export const htmlTemplate = (componentClassName: string, fileName: string) =>
 `<p>
   ${componentClassName} works!
 </p>
@@ -28,6 +28,6 @@ describe('${componentClassName} Component', () => {
 });
 `;
 
-export const styleTemplate = () =>
+export const styleTemplate = (componentClassName: string, fileName: string) =>
 `/* Add your styles here */
 `;

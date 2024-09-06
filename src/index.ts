@@ -101,41 +101,19 @@ function successCreationLog(componentClassName: string, componentDir: string) {
 
 async function createComponent() {
   const { componentName, framework } = await promptForComponent();
-
-  const frameworkKey = framework as FrameworkType;
-
   const { className, fileName, componentDir } = getComponentSettings(componentName);
-
-  const frameworkSettings = FrameworkSettings[frameworkKey];
+  const frameworkKey = framework as FrameworkType;
+  const frameworkTemplates = FrameworkSettings[frameworkKey].templates;
 
   fs.ensureDirSync(componentDir);
 
-  const componentContent = frameworkSettings.templates.component.template(className, fileName);
-  fs.writeFileSync(path.join(componentDir, `${fileName}${frameworkSettings.templates.component.extension}`), componentContent);
-
-  const styleContent = frameworkSettings.templates.style.template(fileName);
-  fs.writeFileSync(path.join(componentDir, `${fileName}${frameworkSettings.templates.style.extension}`), styleContent);
-
-  const testContent = frameworkSettings.templates.test.template(className, fileName);
-  fs.writeFileSync(path.join(componentDir, `${fileName}${frameworkSettings.templates.test.extension}`), testContent);
-
-  if (frameworkSettings.templates.html) {
-    const htmlContent = frameworkSettings.templates.html.template(className);
-    fs.writeFileSync(path.join(componentDir, `${fileName}${frameworkSettings.templates.html.extension}`), htmlContent);
-  }
+  Object.keys(frameworkTemplates).map(tmpl => {
+    const content = frameworkTemplates[tmpl].template(className, fileName);
+    fs.writeFileSync(path.join(componentDir, `${fileName}${frameworkTemplates[tmpl].extension}`), content);
+  });
 
   successCreationLog(className, componentDir);
 }
-
-function writeFile(componentName: string) {
-  const { className, fileName, componentDir } = getComponentSettings(componentName);
-}
-
-
-
-
-
-
 
 const program = new Command();
 

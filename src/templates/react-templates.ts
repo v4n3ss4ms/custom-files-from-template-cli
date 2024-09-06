@@ -21,7 +21,7 @@ describe('${componentClassName} Component', () => {
 });
 `;
 
-export const styleTemplate = (componentName: string) =>
-`.${componentName} {
+export const styleTemplate = (componentClassName: string, fileName: string) =>
+`.${componentClassName} {
 }
 `;
