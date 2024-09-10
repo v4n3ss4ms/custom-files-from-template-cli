@@ -28,7 +28,7 @@ Follow the terminal instructions
 
 ### 1 - Create the templates file
 
-You can use any of the existing ones as examples (i.e [react templates file](./templates/react-templates.ts)).
+You can use any of the existing ones as examples (i.e `/templates/react-templates.ts`).
 
 ### 2 - Add your new framework type
 
@@ -45,11 +45,11 @@ const FRAMEWORKS_SETTINGS: Record<FrameworkType, FrameworkSettings> = {
     templates: {
       component: {
         template: getNewFrameworkTemplate('component'),
-        extension: '.component.ts',
+        extension: '.component_extension.ts',
       },
       style: {
         template: getNewFrameworkTemplate('style'),
-        extension: '.component.scss',
+        extension: '.component_extension.scss',
       },
     },
   },
