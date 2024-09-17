@@ -135,3 +135,6 @@ build
 *.pem
 .idea
 .vscode
+
+#virtual env
+venv
