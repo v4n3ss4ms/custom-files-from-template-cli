@@ -1,3 +1,13 @@
+# CLI - component creation from template
+
+## Table of Contents
+- [Install dependencies](#install-dependencies)
+- [How to use](#how-to-use)
+- [Virtual env](#virtual-env)
+    - [Create](#create)
+    - [Activate](#activate)
+    - [Deactivate](#deactivate)
+
 
 ## Install dependencies
 
@@ -20,6 +30,7 @@ Remember, if you have a virtual env it has to be activated
 ### Activate
 
 Linux/MacOS: `source VIRTUAL_ENV_NAME/bin/activate`
+
 Windows: `VIRTUAL_ENV_NAME\Scripts\activate`
 
 ### Deactivate
