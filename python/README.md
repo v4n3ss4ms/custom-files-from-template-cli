@@ -25,7 +25,7 @@ Remember, if you have a virtual env it has to be activated
 
 ### Create
 
-`python -m venv virtual_env_name`
+`python -m venv VIRTUAL_ENV_NAME`
 
 ### Activate
 
